@@ -5,6 +5,11 @@ import { CustomerModel } from "../models/customer.model.js";
 
 const router = express.Router();
 
+router.get("/all-admins", async (req, res) => {
+  const admins = await AdminModel.find({});
+  res.json({ success: true, data: admins });
+});
+
 router.get("/investment-info", async (req, res) => {
   try {
     const customers = await CustomerModel.find({});
@@ -69,7 +74,7 @@ router.put("/add-investment/:id", async (req, res) => {
   const { addInvestment } = req.body;
   try {
     const admin = await AdminModel.findById(id);
-    const totalInvestment = admin.investment + addInvestment;
+    const totalInvestment = admin.investment + Number(addInvestment);
     const addedInvestment = await AdminModel.findByIdAndUpdate(
       id,
       { investment: totalInvestment },
@@ -77,7 +82,7 @@ router.put("/add-investment/:id", async (req, res) => {
         new: true,
       }
     );
-    res.json({ success: true, data: addedInvestment });
+    res.json({ success: true, data: addedInvestment, res: addInvestment });
   } catch (error) {
     console.log(`Add investment in admin page error ${error.message}`);
   }

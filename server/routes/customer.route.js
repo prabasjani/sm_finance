@@ -15,7 +15,7 @@ router.get("/customer-list", async (req, res) => {
     res.status(200).json({
       success: true,
       totalCustomers: customers.length,
-      data: customers,
+      customersList: customers,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error" });
