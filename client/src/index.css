@@ -10,3 +10,8 @@
 .transition {
   transition: all 0.3s ease;
 }
+#userInput::-webkit-outer-spin-button,
+#userInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

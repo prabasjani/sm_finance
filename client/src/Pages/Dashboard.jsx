@@ -21,7 +21,8 @@ const Dashboard = () => {
         return (
           <div className="col" key={index}>
             <div
-              className={`p-10 flex flex-col gap-5 mr-5 items-start rounded-md shadow-xl bg-gray-500 text-white transition hover:shadow-2xl hover:scale-105`}
+              className={`p-10 flex flex-col gap-5 mr-5 items-start rounded-md shadow-xl  text-white transition hover:shadow-2xl hover:scale-105`}
+              style={{ backgroundColor: dashboardDetail.bgColor }}
             >
               <div className="flex items-center gap-3">
                 {<dashboardDetail.logo size={40} />}

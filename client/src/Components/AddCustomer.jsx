@@ -59,6 +59,7 @@ const AddCustomer = () => {
               placeholder="Aadhar Number"
               className="px-4 py-2 focus:outline-none border-b-2 border-gray-400 rounded-md text-black w-full"
               onChange={(e) => setAadharNumber(e.target.value)}
+              required
             />
             <input
               type="number"

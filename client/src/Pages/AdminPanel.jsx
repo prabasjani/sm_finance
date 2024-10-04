@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { GiPayMoney } from "react-icons/gi";
 import { FaUserPlus } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
+import AdminBarChart from "../Components/AdminBarChart";
+import { Toaster, toast } from "sonner";
 
 const AdminPanel = () => {
   // Add Investment
@@ -21,7 +23,8 @@ const AdminPanel = () => {
   const handleAddInvestment = (e) => {
     e.preventDefault();
     response();
-    navigate("/");
+    toast.success("Investment Added successfully");
+    navigate("/dashboard");
   };
   useEffect(() => {
     response();
@@ -42,6 +45,7 @@ const AdminPanel = () => {
   const handleAddAdmin = (e) => {
     e.preventDefault();
     addAdmin();
+    toast.success("Admin Added");
     navigate("/");
   };
   //   useEffect(() => {
@@ -62,6 +66,7 @@ const AdminPanel = () => {
                 placeholder="Add Investment"
                 className="px-4 py-2 focus:outline-none border-b-2 border-gray-400 rounded-md text-black w-full"
                 onChange={(e) => setAddInvestment(e.target.value)}
+                required
               />
               <button type="submit" className="btn bg-green-600">
                 <div className="flex items-center gap-3">
@@ -79,6 +84,7 @@ const AdminPanel = () => {
                 className="px-4 py-2 focus:outline-none border-b-2 border-gray-400 rounded-md text-black w-full"
                 placeholder="Add Admin..."
                 onChange={(e) => setAdminName(e.target.value)}
+                required
               />
               <input
                 type="text"
@@ -109,7 +115,9 @@ const AdminPanel = () => {
             </form>
           </div>
         </div>
-        <div className="col"></div>
+        <div className="col h-[500px] bg-slate-100 p-5 rounded-lg dark:bg-zinc-800">
+          <AdminBarChart />
+        </div>
       </div>
     </div>
   );

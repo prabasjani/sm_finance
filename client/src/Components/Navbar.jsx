@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <div className="px-20 py-8 flex items-center justify-between bg-slate-100 dark:bg-zinc-800 dark:text-white">
       <a href="" className="text-2xl font-extrabold">
-        <span className="tracking-widest">TPAK</span> Finance
+        <span className="tracking-widest">Sri Mahalaxmi</span> Finance
       </a>
       <div className="flex items-center gap-10">
         <h1 className="font-semibold text-3xl">

@@ -30,7 +30,7 @@ const Sidebar = () => {
         />
       </div>
       <div className="flex flex-col gap-10">
-        <Link to="/" className="flex items-center gap-4">
+        <Link to="/dashboard" className="flex items-center gap-4">
           <MdDashboardCustomize size={25} />
           <p
             className={`${
