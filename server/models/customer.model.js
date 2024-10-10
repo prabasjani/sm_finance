@@ -27,6 +27,10 @@ const CustomerSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    creditStatus: {
+      type: Number,
+      default: 1,
+    },
   },
   { timestamps: true }
 );

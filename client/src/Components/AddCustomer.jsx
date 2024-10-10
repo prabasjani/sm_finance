@@ -1,42 +1,24 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../Context/AppContext";
 
 const AddCustomer = () => {
+  const {
+    customerCount,
+    setCustomerName,
+    setAadharNumber,
+    setMobileNumber,
+    setCreditAmount,
+    setInterestRate,
+    setCreditType,
+    addNewCustomer,
+  } = useContext(AppContext);
   const navigate = useNavigate();
-  const [customerCount, setCustomerCount] = useState(0);
-  const response = async () => {
-    const res = await axios.get(
-      "http://localhost:5000/api/customer/customer-list"
-    );
-    setCustomerCount(res?.data?.totalCustomers);
-  };
-  useEffect(() => {
-    response();
-  }, [customerCount]);
 
-  // Add A new Customer
-  const [customerName, setCustomerName] = useState("");
-  const [aadharNumber, setAadharNumber] = useState(0);
-  const [mobileNumber, setMobileNumber] = useState(0);
-  const [creditAmount, setCreditAmount] = useState(0);
-  const [interestRate, setInterestRate] = useState(0);
-  const [creditType, setCreditType] = useState("");
-
-  const addNewCustomer = async () => {
-    await axios.post("http://localhost:5000/api/customer/add-customer", {
-      customerName,
-      aadharNumber,
-      mobileNumber,
-      creditAmount,
-      interestRate,
-      creditType,
-    });
-  };
   const handleAddCustomer = (e) => {
     e.preventDefault();
     addNewCustomer();
-    navigate("/custInfo");
+    navigate("/dashboard");
   };
 
   return (
@@ -55,17 +37,19 @@ const AddCustomer = () => {
               onChange={(e) => setCustomerName(e.target.value)}
             />
             <input
-              type="number"
+              type="text"
               placeholder="Aadhar Number"
               className="px-4 py-2 focus:outline-none border-b-2 border-gray-400 rounded-md text-black w-full"
               onChange={(e) => setAadharNumber(e.target.value)}
               required
+              maxLength={12}
             />
             <input
-              type="number"
+              type="text"
               placeholder="Mobile Number"
               className="px-4 py-2 focus:outline-none border-b-2 border-gray-400 rounded-md text-black w-full"
               onChange={(e) => setMobileNumber(e.target.value)}
+              maxLength={10}
             />
             <input
               type="number"
@@ -74,7 +58,7 @@ const AddCustomer = () => {
               onChange={(e) => Number(setCreditAmount(e.target.value))}
             />
             <select
-              className="px-4 py-2 focus:outline-none border-b-2 border-gray-400 rounded-md text-black w-full"
+              className="px-4 py-2 focus:outline-none border-b-2 bg-white border-gray-400 rounded-md text-black w-full"
               onChange={(e) => Number(setInterestRate(e.target.value))}
             >
               <option value="">Interest Rate</option>
@@ -82,10 +66,11 @@ const AddCustomer = () => {
               <option value="0.1">10%</option>
             </select>
             <select
-              className="px-4 py-2 focus:outline-none border-b-2 border-gray-400 rounded-md text-black w-full"
+              className="px-4 py-2 focus:outline-none bg-white border-b-2 border-gray-400 rounded-md text-black w-full"
               onChange={(e) => setCreditType(e.target.value)}
             >
               <option value="">Credit Type</option>
+              <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
             </select>

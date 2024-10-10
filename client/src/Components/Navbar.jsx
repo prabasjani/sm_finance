@@ -23,7 +23,7 @@ const Navbar = () => {
       </a>
       <div className="flex items-center gap-10">
         <h1 className="font-semibold text-3xl">
-          <span>&#128075;</span> Welcome Mr.Prabanjan
+          <span className="animate-ping">&#128075;</span> Welcome Mr.Prabanjan
         </h1>
         <button
           className="p-2 border shadow-lg rounded-full"

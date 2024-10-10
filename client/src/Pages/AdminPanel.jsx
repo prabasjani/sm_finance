@@ -1,34 +1,23 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GiPayMoney } from "react-icons/gi";
-import { FaUserPlus } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
 import AdminBarChart from "../Components/AdminBarChart";
 import { Toaster, toast } from "sonner";
+import { AppContext } from "../Context/AppContext";
 
 const AdminPanel = () => {
-  // Add Investment
-  const [addInvestment, setAddInvestment] = useState(0);
+  const { setAddInvestment, addInvestmentResponse, adminData } =
+    useContext(AppContext);
   const navigate = useNavigate();
-  const response = async () => {
-    const admin = await axios.get("http://localhost:5000/api/admin/all-admins");
-    await axios.put(
-      `http://localhost:5000/api/admin/add-investment/${admin?.data?.data?.[0]._id}`,
-      {
-        addInvestment,
-      }
-    );
-  };
+
   const handleAddInvestment = (e) => {
     e.preventDefault();
-    response();
+    addInvestmentResponse();
     toast.success("Investment Added successfully");
     navigate("/dashboard");
   };
-  useEffect(() => {
-    response();
-  }, []);
 
   //   Add admin
   const [adminName, setAdminName] = useState("");
@@ -45,12 +34,10 @@ const AdminPanel = () => {
   const handleAddAdmin = (e) => {
     e.preventDefault();
     addAdmin();
+    <Toaster />;
     toast.success("Admin Added");
-    navigate("/");
+    navigate("/dashboard");
   };
-  //   useEffect(() => {
-  //     addAdmin();
-  //   }, []);
 
   return (
     <div className="w-full px-16 pt-10 dark:bg-black dark:text-white">
@@ -105,18 +92,10 @@ const AdminPanel = () => {
                 </div>
               </button>
             </form>
-
-            <form className="flex flex-col items-start gap-3">
-              <Link to="/addCustomer" className="btn bg-red-600">
-                <div className="flex items-center gap-3">
-                  <FaUserPlus size={20} /> Add New Customer
-                </div>
-              </Link>
-            </form>
           </div>
         </div>
         <div className="col h-[500px] bg-slate-100 p-5 rounded-lg dark:bg-zinc-800">
-          <AdminBarChart />
+          <AdminBarChart adminData={adminData} />
         </div>
       </div>
     </div>

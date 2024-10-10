@@ -2,6 +2,7 @@ import express from "express";
 import { AdminModel } from "../models/admin.model.js";
 import bcrypt from "bcrypt";
 import { CustomerModel } from "../models/customer.model.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -88,4 +89,19 @@ router.put("/add-investment/:id", async (req, res) => {
   }
 });
 
+router.delete("/delete-admin/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Admin not found Invalid ID" });
+  }
+  try {
+    await AdminModel.findByIdAndDelete(id);
+    res.json({ success: true, message: "Admin Removed" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error" });
+    console.log(`deleting admin failed ${error.message}`);
+  }
+});
 export { router as AdminRoute };

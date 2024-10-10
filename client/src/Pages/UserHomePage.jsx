@@ -1,41 +1,22 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import UserInfo from "./UserInfo";
+import { AppContext } from "../Context/AppContext";
 
 const UserHomePage = () => {
-  const [fetched, setFetched] = useState([]);
+  const { customers, customersListResponse } = useContext(AppContext);
   const [mobileNumber, setMobileNumber] = useState(0);
   const [error, setError] = useState("");
 
-  // const navigate = useNavigate();
-
-  const response = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/api/customer/customer-list"
-      );
-      setFetched(res?.data?.customersList);
-    } catch (error) {
-      console.log("Error Fetching Info");
-    }
-    // customer
-    //   ? navigate("/UserInfo")
-    //   : setError("No User Found in this Mobile Number");
-    //
-  };
-  // useEffect(() => {
-  //   response();
-  // }, []);
-
   const getDetail = (e) => {
     e.preventDefault();
-    response();
+    customersListResponse();
   };
 
-  const customer = fetched.find(
+  const customer = customers.find(
     (customer) => customer.mobileNumber == mobileNumber
   );
+
   return (
     <div className="px-20 py-10 bg-white w-full min-h-full flex flex-col gap-5 items-center justify-center dark:bg-black dark:text-white">
       <h1 className="text-3xl font-bold">Welcome to Sri Mahalaxmi Finance</h1>

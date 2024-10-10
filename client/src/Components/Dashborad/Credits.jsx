@@ -1,24 +1,30 @@
+import React, { useContext } from "react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
   Legend,
-  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import { AppContext } from "../../Context/AppContext";
 
-const AdminBarChart = ({ adminData }) => {
+const Credits = () => {
+  const { customers } = useContext(AppContext);
   return (
-    <>
-      {adminData && (
+    <div className="w-full p-10 h-[600px] dark:bg-zinc-900">
+      {customers.length <= 0 ? (
+        <h1 className="text-5xl font-bold text-center">
+          No Customers List found
+        </h1>
+      ) : (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             width={100}
             height={400}
-            data={adminData}
+            data={customers}
             margin={{
               top: 5,
               right: 30,
@@ -27,17 +33,16 @@ const AdminBarChart = ({ adminData }) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="adminName" />
+            <XAxis dataKey="customerName" />
             <YAxis />
             <Tooltip labelStyle={{ color: "#00ff00" }} />
             <Legend />
-            <Line />
-            <Bar dataKey="investment" fill="#FEB941" stroke="#ff0000" />
+            <Bar dataKey="creditAmount" fill="#E72929" stroke="#00ff00" />
           </BarChart>
         </ResponsiveContainer>
       )}
-    </>
+    </div>
   );
 };
 
-export default AdminBarChart;
+export default Credits;

@@ -1,7 +1,6 @@
 import React from "react";
 
 const UserInfo = ({ customer }) => {
-  console.log(customer);
   return (
     <div className="h-400px dark:bg-black dark:text-white">
       <div className="grid grid-cols-3">

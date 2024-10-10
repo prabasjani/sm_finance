@@ -1,34 +1,39 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
+import { FcPaid } from "react-icons/fc";
 import { TiArrowBackOutline } from "react-icons/ti";
+import { AppContext } from "../Context/AppContext";
 
 const Customer = () => {
-  const [fetched, setFetched] = useState([]);
+  const { customers } = useContext(AppContext);
+  const [creditStatus, setCreditStatus] = useState(1);
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const response = async () => {
-    const res = await axios.get(
-      "http://localhost:5000/api/customer/customer-list"
-    );
-    setFetched(res?.data?.customersList);
-  };
-
-  useEffect(() => {
-    response();
-  }, []);
 
   const removeCustomer = async (id) => {
     await axios.delete(
       `http://localhost:5000/api/customer/delete-customer/${id}`
     );
-    navigate("/custInfo");
+    navigate("/dashboard");
   };
 
-  const customer = fetched.find((customer) => customer._id == id);
+  const customer = customers.find((customer) => customer._id == id);
+
+  const updatePayment = async (id) => {
+    await axios.put(
+      `http://localhost:5000/api/customer/update-customer/${id}`,
+      { creditStatus }
+    );
+    if (creditStatus == 10) {
+      setCreditStatus(11);
+    } else {
+      setCreditStatus((prev) => prev + 1);
+    }
+  };
+
   return (
     <div className="p-10 flex flex-col justify-center gap-10 w-full dark:bg-black dark:text-white">
       <h1 className="text-4xl font-bold text-center">Customer Details</h1>
@@ -54,17 +59,26 @@ const Customer = () => {
           <p className="text-2xl border-b">{customer?.creditType}</p>
           <p className="text-2xl border-b">{customer?.interestRate * 100}%</p>
           <p className="text-2xl border-b">
-            3/10 {customer?.creditType === "weekly" ? "weeks" : "months"}
+            {customer?.creditStatus}
+            {customer?.creditType === "weekly" ? "/10 weeks" : "/10 months"}
           </p>
         </div>
       </div>
       <div className="flex gap-5 justify-end">
         <Link
-          to="/custInfo"
+          to="/dashboard"
           className="btn bg-zinc-500 text-white font-semibold flex items-center gap-3 hover:bg-zinc-600"
         >
           Back <TiArrowBackOutline />
         </Link>
+        <button
+          className="rounded-lg px-6 bg-green-200 border-2 border-green-600 flex items-center gap-3 hover:bg-green-600 hover:text-white text-green-600 font-semibold"
+          onClick={() => updatePayment(customer?._id)}
+          disabled={creditStatus === 11 ? true : false}
+        >
+          {creditStatus === 11 ? "Finished" : "Paid"}
+          <FcPaid />
+        </button>
         <button className="btn bg-blue-500 flex items-center gap-3 hover:bg-blue-600 text-white font-semibold">
           Update <FaEdit />
         </button>
