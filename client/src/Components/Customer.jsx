@@ -6,11 +6,13 @@ import { FaEdit } from "react-icons/fa";
 import { FcPaid } from "react-icons/fc";
 import { TiArrowBackOutline } from "react-icons/ti";
 import { AppContext } from "../Context/AppContext";
+import { toast } from "sonner";
 
 const Customer = () => {
-  const { customers } = useContext(AppContext);
-  const [creditStatus, setCreditStatus] = useState(1);
   const { id } = useParams();
+  const { customers } = useContext(AppContext);
+  const customer = customers.find((customer) => customer._id == id);
+  const [creditStatus, setCreditStatus] = useState(customer?.creditStatus);
   const navigate = useNavigate();
 
   const removeCustomer = async (id) => {
@@ -18,9 +20,10 @@ const Customer = () => {
       `http://localhost:5000/api/customer/delete-customer/${id}`
     );
     navigate("/dashboard");
+    toast.error(
+      `${customer?.customerName?.toUpperCase()}'s details was deleted!`
+    );
   };
-
-  const customer = customers.find((customer) => customer._id == id);
 
   const updatePayment = async (id) => {
     await axios.put(
@@ -73,13 +76,29 @@ const Customer = () => {
         </Link>
         <button
           className="rounded-lg px-6 bg-green-200 border-2 border-green-600 flex items-center gap-3 hover:bg-green-600 hover:text-white text-green-600 font-semibold"
-          onClick={() => updatePayment(customer?._id)}
+          onClick={() =>
+            updatePayment(
+              customer?._id,
+              creditStatus === 10
+                ? toast.success(
+                    `${customer?.customerName?.toUpperCase()} was Finished all Due's`
+                  )
+                : toast.info(
+                    `${customer?.customerName?.toUpperCase()} is paid ${
+                      customer?.creditStatus + 1
+                    } Due amount`
+                  )
+            )
+          }
           disabled={creditStatus === 11 ? true : false}
         >
           {creditStatus === 11 ? "Finished" : "Paid"}
           <FcPaid />
         </button>
-        <button className="btn bg-blue-500 flex items-center gap-3 hover:bg-blue-600 text-white font-semibold">
+        <button
+          className="btn bg-blue-500 flex items-center gap-3 hover:bg-blue-600 text-white font-semibold"
+          onClick={() => navigate(`/updateCustomer/${customer?._id}`)}
+        >
           Update <FaEdit />
         </button>
         <button

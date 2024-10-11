@@ -47,14 +47,10 @@ const CustInfo = ({ searchCust }) => {
                 return (
                   <div className="table-row-group" key={index}>
                     <div
-                      className={`table-row dark:text-slate-200 cursor-pointer hover:bg-red-100 dark:hover:bg-zinc-800 ${
-                        customer?.creditStatus === 10
-                          ? "bg-green-100 hover:bg-green-200"
-                          : null
-                      }`}
+                      className={`table-row dark:text-slate-200 cursor-pointer hover:bg-red-100 dark:hover:bg-zinc-800  `}
                     >
                       <Link
-                        to={`/customer/${customer._id}`}
+                        to={`/dashboard/customer/${customer._id}`}
                         className="table-cell text-center p-3 text-xl font-semibold"
                       >
                         {customer?.customerName?.toUpperCase()}

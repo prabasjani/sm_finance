@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
+import { toast } from "sonner";
 
 const AddCustomer = () => {
   const {
@@ -18,6 +19,7 @@ const AddCustomer = () => {
   const handleAddCustomer = (e) => {
     e.preventDefault();
     addNewCustomer();
+    toast.success("New Customer Added Successfully!...");
     navigate("/dashboard");
   };
 

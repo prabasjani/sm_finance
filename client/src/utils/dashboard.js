@@ -8,7 +8,7 @@ export const dashboardDetails = [
     logo: RiMoneyRupeeCircleFill,
     title: "Total Investment",
     result: "investment",
-    fulInfo: "/investment",
+    fulInfo: "/dashboard/investment",
     bgColor: "#FEB941",
   },
   {
@@ -22,14 +22,14 @@ export const dashboardDetails = [
     logo: GiPayMoney,
     title: "Total Credits",
     result: "totalCredit",
-    fulInfo: "/credits",
+    fulInfo: "/dashboard/credits",
     bgColor: "#E72929",
   },
   {
     logo: GiReceiveMoney,
     title: "Total Profit",
     result: "totalProfit",
-    fulInfo: "/profits",
+    fulInfo: "/dashboard/profits",
     bgColor: "#06D001",
   },
 ];

@@ -85,7 +85,14 @@ router.post("/add-customer", async (req, res) => {
 
 router.put("/update-customer/:id", async (req, res) => {
   const { id } = req.params;
-  const customer = req.body;
+  const {
+    customerName,
+    aadharNumber,
+    mobileNumber,
+    creditAmount,
+    interestRate,
+    creditType,
+  } = req.body;
   const creditStatus = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res
@@ -96,7 +103,14 @@ router.put("/update-customer/:id", async (req, res) => {
   try {
     const updatedCustomer = await CustomerModel.findByIdAndUpdate(
       id,
-      customer,
+      {
+        customerName,
+        aadharNumber,
+        mobileNumber,
+        creditAmount,
+        interestRate,
+        creditType,
+      },
       { new: true }
     );
     const creditStatusUpdated = await CustomerModel.findByIdAndUpdate(

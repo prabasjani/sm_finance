@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 export const AppContext = createContext(null);
 
@@ -48,14 +49,18 @@ const AppContextProvider = ({ children }) => {
   const [creditType, setCreditType] = useState("");
 
   const addNewCustomer = async () => {
-    await axios.post("http://localhost:5000/api/customer/add-customer", {
-      customerName,
-      aadharNumber,
-      mobileNumber,
-      creditAmount,
-      interestRate,
-      creditType,
-    });
+    try {
+      await axios.post("http://localhost:5000/api/customer/add-customer", {
+        customerName,
+        aadharNumber,
+        mobileNumber,
+        creditAmount,
+        interestRate,
+        creditType,
+      });
+    } catch (error) {
+      toast.error(`${error.message}`);
+    }
   };
 
   // Add Investment

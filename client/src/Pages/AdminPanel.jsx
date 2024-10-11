@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GiPayMoney } from "react-icons/gi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import AdminBarChart from "../Components/AdminBarChart";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { AppContext } from "../Context/AppContext";
 
 const AdminPanel = () => {
@@ -34,8 +34,7 @@ const AdminPanel = () => {
   const handleAddAdmin = (e) => {
     e.preventDefault();
     addAdmin();
-    <Toaster />;
-    toast.success("Admin Added");
+    toast.success("Admin Added Successfully");
     navigate("/dashboard");
   };
 
@@ -44,6 +43,9 @@ const AdminPanel = () => {
       <div className="grid grid-cols-2 gap-5">
         <div className="col h-[500px] bg-slate-100 p-5 rounded-lg dark:bg-zinc-800">
           <div className="flex flex-col justify-center gap-5 h-full text-white">
+            <h1 className="text-3xl font-bold text-center text-black dark:text-white">
+              Control Center
+            </h1>
             <form
               className="flex flex-col items-start gap-3"
               onSubmit={handleAddInvestment}

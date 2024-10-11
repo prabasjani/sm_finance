@@ -4,6 +4,7 @@ import AdminBarChart from "../AdminBarChart";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { AppContext } from "../../Context/AppContext";
+import { toast } from "sonner";
 
 const Investment = () => {
   const { adminData, removeAdmin } = useContext(AppContext);
@@ -38,7 +39,16 @@ const Investment = () => {
                       <button>
                         <FaEdit color="blue" size={20} />
                       </button>
-                      <button onClick={() => removeAdmin(admin?._id)}>
+                      <button
+                        onClick={() =>
+                          removeAdmin(
+                            admin?._id,
+                            toast.error(
+                              `${admin?.adminName?.toUpperCase()} was Deleted from AdminList`
+                            )
+                          )
+                        }
+                      >
                         <FaTrashAlt color="red" size={20} />
                       </button>
                     </div>

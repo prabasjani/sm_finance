@@ -49,12 +49,6 @@ const Sidebar = () => {
             Admin Panel
           </p>
         </Link>
-        <Link to="/contact" className="flex items-center gap-4">
-          <MdContacts size={25} />
-          <p className={`${hideSideBar ? "hidden" : "block"} transition`}>
-            Contact
-          </p>
-        </Link>
       </div>
     </div>
   );
